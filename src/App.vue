@@ -86,12 +86,12 @@ const handleTransactionDeleted = (id) => {
   <div class="container">
     <Balance :totalBalance="+totalBalance" />
     <IncomeExpense :Income="+Income" :Expenses="+Expenses" />
+    <AddTransaction
+    @transactionSubmitted="handleTransactionSubmitted"
+    />
     <TransactionList
       :transactions="transactions"
       @transactionDeleted="handleTransactionDeleted"
-    />
-    <AddTransaction
-      @transactionSubmitted="handleTransactionSubmitted"
     />
   </div>
 </template>

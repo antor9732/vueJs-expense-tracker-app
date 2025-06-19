@@ -4,41 +4,46 @@ import { useToast } from "vue-toastification";
 
 const text = ref("");
 const amount = ref("");
+const type = ref("");
 
 const emit = defineEmits(["TransactionSubmitted"]);
 
 const toast = useToast();
 
 const onSubmit = () => {
-  if (!text.value || !amount.value) {
-    toast.error("Please add text and amount");
+  if (!text.value || !amount.value || !type.value) {
+    toast.error("Please add transaction Name amount & type");
     return;
   }
 
   const transactionData = {
     id: Math.floor(Math.random() * 1000000),
     text: text.value,
-    amount: parseFloat(amount.value),
+    amount: type.value === 'income' 
+      ? parseFloat(amount.value) 
+      : -parseFloat(amount.value), // Make expense negative
+    type: type.value
   };
 
-  emit('TransactionSubmitted', transactionData);
+  emit("TransactionSubmitted", transactionData);
 
+  // Reset form
   text.value = "";
   amount.value = "";
+  type.value = "";
 };
 </script>
 
 <template>
-  <h3>Add new transaction</h3>
+  <h3 class="add-transaction-title">Add new transaction</h3>
   <form id="form" @submit.prevent="onSubmit">
     <div class="form-control">
-      <label for="text">Write your Income or Expense Name</label>
+      <label class="input-title" for="text">Write your Income/Expense Name:</label>
       <input type="text" id="text" v-model="text" placeholder="Enter text..." />
     </div>
     <div class="form-control">
-      <label for="amount"
-        >Income/Expense Amount <br/>
-        (negative - expense, positive - income)</label
+      <label class="input-title" for="amount"
+        >Income/Expense Amount:</label
       >
       <input
         type="text"
@@ -46,6 +51,33 @@ const onSubmit = () => {
         id="amount"
         placeholder="Enter amount..."
       />
+    </div>
+    <div class="income-expense-btn">
+      <label class="input-title" 
+      for="input-title"
+      >Transaction Types:</label>
+      <div class="form-control">
+        <label>
+          <input
+            type="radio"
+            id="incomeBtn"
+            value="income"
+            v-model="type"
+            name="type"
+          />
+          (+) Income
+        </label>
+        <label>
+          <input
+            type="radio"
+            id="expenseBtn"
+            value="expense"
+            v-model="type"
+            name="type"
+          />
+          (-) Expense
+        </label>
+      </div>
     </div>
     <button class="btn">Add transaction</button>
   </form>

@@ -21,7 +21,7 @@ const props = defineProps({
     </div>
     <div>
       <h4>Expense</h4>
-      <p id="money-minus" class="money minus">-${{ Math.abs(Expenses) }}</p>
+      <p id="money-minus" class="money minus">${{ Math.abs(Expenses) }}</p>
     </div>
   </div>
 </template>

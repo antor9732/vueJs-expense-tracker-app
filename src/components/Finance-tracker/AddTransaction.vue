@@ -50,6 +50,7 @@ const onSubmit = () => {
         v-model="amount"
         id="amount"
         placeholder="Enter amount..."
+        
       />
     </div>
     <div class="income-expense-btn">

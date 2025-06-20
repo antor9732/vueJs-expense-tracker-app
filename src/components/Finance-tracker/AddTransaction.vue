@@ -46,7 +46,7 @@ const onSubmit = () => {
         >Income/Expense Amount:</label
       >
       <input
-        type="text"
+        type="number"
         v-model="amount"
         id="amount"
         placeholder="Enter amount..."
